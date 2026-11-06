@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AliShop</title>
+    <link rel="stylesheet" href="./swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    <header>
+        <label for="show" class="showBtn">
+            <div></div>
+            <div></div>
+            <div></div>
+        </label>
+    </header>
+    <input type="radio" name="menu" id="show">
+    <input type="radio" name="menu" id="close">
+
+    <div class="menu">
+        <label for="close" class="closeBtn">
+            &times;
+        </label>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">home</a>
+                </li>
+                <li>
+                    <a href="#">about</a>
+                </li>
+                <li>
+                    <a href="#">gallery</a>
+                </li>
+                <li>
+                    <a href="#">contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="slider">
+        <div class="swiper aliShopSlider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="./images/slide1.webp" alt="slide1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="./images/slide2.webp" alt="slide1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="./images/slide3.webp" alt="slide1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="products" id="products">
+    </div>
+
+    
+    <script src="./swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.aliShopSlider', {
+          spaceBetween: 0,
+          centeredSlides: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+    </script>
+
+    <script>
+        async function fetchData () {
+            let products = ''
+            let data = await fetch("https://fakestoreapi.com/products")
+            let res = await data.json()
+            products = res?.map((item)=>{
+                return `<div class="product">
+            <div class="title">${item.title}</div>
+            <div class="image">
+                <img src=${item.image} alt=${item.title}>
+            </div>
+            <div class="description">
+                ${item.description}
+            </div>
+            <div class="category">${item.category}</div>
+            <div class="price">$${item.price}</div>
+            <div class="rating">
+                <div class="rate">rate: ${item.rating.rate}</div>
+                <div class="count">count: ${item.rating.count} </div>
+            </div>
+            <button class="buyBtn">buy now</button>
+        </div>`
+            })
+            document.querySelector("#products").insertAdjacentHTML("afterbegin",products.join(" "))
+        }
+        fetchData()
+    </script>
+</body>
+</html>

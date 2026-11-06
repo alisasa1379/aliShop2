@@ -1,0 +1,32 @@
+
+header {
+    display: none;
+}
+
+.menu {
+    width: 100%;
+    height: auto;
+    position: unset;
+    .closeBtn {
+        display: none;
+    }
+    nav{
+        ul{
+            flex-flow: row nowrap;
+            justify-content: center;
+            gap: 20px;
+            li {
+                width: fit-content;
+                a{
+                    transition: 500ms;
+                }
+                &:hover {
+                    background-color: unset;
+                    a {
+                        color: gold;
+                    }
+                }
+            }
+        }
+    }
+}
